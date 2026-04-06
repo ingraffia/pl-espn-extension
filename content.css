@@ -1,0 +1,197 @@
+/* content.css — PitcherList Rank Overlay badges */
+
+.pl-rank-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1;
+  padding: 2px 5px 3px;
+  border-radius: 3px;
+  margin-left: 5px;
+  vertical-align: middle;
+  white-space: nowrap;
+  cursor: default;
+  letter-spacing: 0.02em;
+  /* Subtle lift so it reads clearly on ESPN's busy layout */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* SP — Orange → Amber → Gold: 1-20 / 21-50 / 51-100 */
+
+/* RP — Orange → Amber → Gold: 1-30 / 31-100 / 101-300 */
+
+/* Subtle hover tooltip enhancement — ESPN already has tooltips but this adds a
+   scale effect so users know the badge is interactive */
+.pl-rank-badge:hover {
+  opacity: 0.85;
+  transform: scale(1.05);
+  transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+/* Unified tier palette — red → orange → amber → yellow */
+.pl-rank-badge[data-pl-tier="1"] { background-color: #dc2626; color: #fff; }
+.pl-rank-badge[data-pl-tier="2"] { background-color: #FF5C00; color: #fff; }
+.pl-rank-badge[data-pl-tier="3"] { background-color: #f59e0b; color: #fff; }
+.pl-rank-badge[data-pl-tier="4"] { background-color: #fde047; color: #78350f; }
+
+
+/* ── Filter button ─────────────────────────────────────────────────────── */
+
+#pl-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 5px 10px;
+  margin: 4px 8px 4px 0;
+  border-radius: 4px;
+  border: 2px solid #2563eb;
+  background: #ffffff;
+  color: #2563eb;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+  vertical-align: middle;
+}
+
+#pl-filter-btn:hover {
+  background: #eff6ff;
+}
+
+#pl-filter-btn.pl-filter-btn--active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+/* ── Hidden rows ───────────────────────────────────────────────────────── */
+
+tr.pl-row-hidden {
+  display: none !important;
+}
+
+/* H — Amber → Gold → Yellow: 1-50 / 51-150 / 151-300 */
+
+/* Prospect badge — orange with star prefix */
+.pl-rank-badge[data-pl-type="prospect"] {
+  background-color: #ea580c;
+  color: #ffffff;
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
+/* Hide all badges when team page toggle is off */
+body.pl-ranks-hidden .pl-rank-badge {
+  display: none !important;
+}
+
+#pl-team-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 5px 10px;
+  margin: 6px 0;
+  border-radius: 4px;
+  border: 2px solid #2563eb;
+  background: #ffffff;
+  color: #2563eb;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+#pl-team-toggle-btn:hover { background: #eff6ff; }
+
+#pl-team-toggle-btn.pl-filter-btn--active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+/* ── Rank delta ─────────────────────────────────────────────────────────── */
+
+.pl-rank-delta {
+  font-size: 9px;
+  font-weight: 700;
+  vertical-align: middle;
+  letter-spacing: 0;
+  opacity: 0.9;
+}
+
+.pl-delta-up   { color: #16a34a; }
+.pl-delta-down { color: #dc2626; }
+.pl-delta-new  {
+  color: #ffffff;
+  background: #7c3aed;
+  border-radius: 3px;
+  padding: 0 3px;
+  font-size: 8px;
+}
+
+/* ── Keeper badge ───────────────────────────────────────────────────────── */
+
+.pl-keeper-badge {
+  display: inline;
+  font-size: 10px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin-left: 4px;
+  color: #9ca3af;
+  white-space: nowrap;
+  cursor: default;
+}
+
+/* ── Auto-capture toast ─────────────────────────────────────────────────── */
+
+#pl-capture-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 99999;
+  padding: 7px 14px;
+  background: #1a1a2e;
+  color: #fef08a;
+  border: 1px solid #ca8a04;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* ── Sit/Start badge ─────────────────────────────────────────────────────── */
+
+.pl-ss-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 1px 4px;
+  margin-left: 3px;
+  border-radius: 3px;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.pl-ss-badge[data-ss-label="Start"] {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+
+.pl-ss-badge[data-ss-label="Maybe"] {
+  background: #fef9c3;
+  color: #a16207;
+  border: 1px solid #fde047;
+}
+
+.pl-ss-badge[data-ss-label="Sit"] {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+}

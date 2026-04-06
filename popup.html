@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PitcherList Ranks</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <span class="logo-icon">⚾</span>
+      <span class="logo-text">PitcherList Ranks</span>
+    </header>
+
+    <section class="stats-grid">
+      <div class="stat-card sp">
+        <div class="stat-label">SP Rankings</div>
+        <div class="stat-value" id="sp-count">—</div>
+        <div class="stat-sub" id="sp-label">The List</div>
+      </div>
+      <div class="stat-card h">
+        <div class="stat-label">Hitter Rankings</div>
+        <div class="stat-value" id="h-count">—</div>
+        <div class="stat-sub" id="h-label">Hitter List</div>
+      </div>
+      <div class="stat-card prospect">
+        <div class="stat-label">Prospects</div>
+        <div class="stat-value" id="prospect-count">—</div>
+        <div class="stat-sub">Dynasty List</div>
+      </div>
+      <div class="stat-card rp">
+        <div class="stat-label">RP Rankings</div>
+        <div class="stat-value" id="rp-count">—</div>
+        <div class="stat-sub" id="rp-label">Closing Time</div>
+      </div>
+    </section>
+
+    <div class="updated-row">
+      <span class="updated-label">Last updated</span>
+      <span class="updated-value" id="last-updated">Never</span>
+    </div>
+
+    <div id="error-banner" class="error-banner hidden"></div>
+
+    <button id="sync-draft-btn" class="btn-sync">
+      <span class="btn-icon">💰</span> Sync Draft Prices
+    </button>
+    <button id="refresh-btn" class="btn-refresh">
+      <span class="btn-icon">↻</span> Refresh Rankings
+    </button>
+
+    <div id="status-msg" class="status-msg"></div>
+
+    <section id="article-links" class="article-links hidden">
+      <a id="sp-link" href="#" target="_blank" class="article-link sp-link">
+        Open latest SP list ↗
+      </a>
+      <a id="rp-link" href="#" target="_blank" class="article-link rp-link">
+        Open latest RP list ↗
+      </a>
+    </section>
+
+    <footer>
+      <span class="legend-dot sp-dot"></span> SP (The List) &nbsp;
+      <span class="legend-dot rp-dot"></span> RP (Closing Time) &nbsp;
+      <span class="legend-dot h-dot"></span> Hitter (Hitter List) &nbsp;
+      <span class="legend-dot prospect-dot"></span> Prospect &nbsp;
+      <span class="legend-dot elite-dot"></span> Top 10
+    </footer>
+
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
