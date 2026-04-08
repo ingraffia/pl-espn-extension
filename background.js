@@ -24,6 +24,8 @@ const SOURCES = {
     maxRank: 300,
   },
   h: {
+    categoryUrl: 'https://pitcherlist.com/category/fantasy/hitters-fantasy/hitter-list/',
+    urlMustContain: 'hitter',
     directUrl: 'https://pitcherlist.com/top-150-hitters-for-fantasy-baseball-2026-weeks-1-2/',
     maxRank:   150,
   },
