@@ -166,6 +166,8 @@ async function syncESPNDraftPrices() {
 function normalizeName(name) {
   return (name ?? '')
     .toLowerCase()
+    .replace(/\(batter\)/g, '')
+    .replace(/\(pitcher\)/g, '')
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z\s'.\-]/g, '')

@@ -156,8 +156,8 @@
       const posEl     = el.closest('.player-column__bio')?.querySelector('.playerinfo__playerpos')
                      ?? el.parentElement?.querySelector('.playerinfo__playerpos');
       const pos       = posEl ? posEl.textContent.toUpperCase() : '';
-      const isPitcher = pos.includes('SP') || pos.includes('RP');
-      const isHitter  = pos && !isPitcher;
+      const isPitcher = pos.includes('SP') || pos.includes('RP') || pos.includes('P');
+      const isHitter  = (pos && !isPitcher) || pos.includes('DH') || pos.includes('OF') || pos.includes('UT') || pos.includes('1B') || pos.includes('2B') || pos.includes('3B') || pos.includes('SS') || pos.includes('C');
 
       const entry = resolveEntry(rawName, isPitcher, isHitter);
       const norm  = normalizeName(rawName);
@@ -214,8 +214,8 @@
         pos = dashIdx >= 0 ? posText.slice(dashIdx + 3).toUpperCase() : posText.toUpperCase();
       }
 
-      const isPitcher = pos.includes('SP') || pos.includes('RP');
-      const isHitter  = pos && !isPitcher;
+      const isPitcher = pos.includes('SP') || pos.includes('RP') || pos.includes('P');
+      const isHitter  = (pos && !isPitcher) || pos.includes('DH') || pos.includes('OF') || pos.includes('UT') || pos.includes('1B') || pos.includes('2B') || pos.includes('3B') || pos.includes('SS') || pos.includes('C');
 
       // Sit/Start badge — team page only, SP only, only if probable starter today
       if (ON_TEAM_PAGE && isPitcher && sitStartMap) {
@@ -533,13 +533,19 @@
 
     if (candidates.length === 0) return null;
 
-    // Always prefer hitter rank over pitcher rank — if a player has an 'h' entry, use it
-    const hitterEntry = candidates.find(e => e.type === 'h');
-    if (hitterEntry) return hitterEntry;
+    // If we confidently know the player's position context, filter candidates.
+    // If the player is BOTH a pitcher and hitter (like combined Ohtani), we prioritize the best rank overall, or we can look at the active lineup slot if we knew it.
+    // For now, if they match types, we filter for only the matched types.
+    let typeMatched = candidates.filter(e => typeMatches(e.type, isPitcher, isHitter));
+    
+    // If we have an exact position match (e.g., they are only a pitcher), use only pitcher ranks.
+    if (isPitcher && !isHitter) {
+      typeMatched = candidates.filter(e => e.type === 'sp' || e.type === 'rp' || e.type === 'prospect');
+    } else if (isHitter && !isPitcher) {
+      typeMatched = candidates.filter(e => e.type === 'h' || e.type === 'prospect');
+    }
 
-    // Otherwise return type-matched entry with best rank
-    const typeMatched = candidates.filter(e => typeMatches(e.type, isPitcher, isHitter));
-    const pool        = typeMatched.length > 0 ? typeMatched : candidates;
+    const pool = typeMatched.length > 0 ? typeMatched : candidates;
     return pool.reduce((best, e) => e.rank < best.rank ? e : best);
   }
 
@@ -568,6 +574,8 @@
   function normalizeName(name) {
     return name
       .toLowerCase()
+      .replace(/\(batter\)/g, '')
+      .replace(/\(pitcher\)/g, '')
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .replace(/[^a-z\s'.\-]/g, '')
