@@ -14,9 +14,9 @@ const ALARM_NAME = 'plDailyRefresh';
 
 const SOURCES = {
   sp: {
-    wpApiUrl:  'https://pitcherlist.com/wp-json/wp/v2/posts?per_page=1&_fields=link&categories_exclude=0&tags=0',
-    wpSearch:  'starting pitcher',
-    directUrl: 'https://pitcherlist.com/top-100-starting-pitchers-for-2026-fantasy-baseball-3-30-week-2-rankings/',
+    categoryUrl: 'https://pitcherlist.com/category/fantasy/starting-pitchers/the-list/',
+    urlMustContain: 'starting-pitcher',
+    directUrl: 'https://pitcherlist.com/top-100-starting-pitchers-for-2026-fantasy-baseball-4-6-week-3-rankings/',
     maxRank:   100,
   },
   rp: {
