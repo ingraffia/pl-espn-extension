@@ -392,7 +392,7 @@ function extractFirstArticleUrl(html, mustContain) {
 // ── Parser A: Numbered list ────────────────────────────────────────────────
 
 function parseNumberedRankings(html, type, maxRank) {
-  const rankings  = [];
+  let rankings  = [];
   const seenRanks = new Set();
   const seenNames = new Set();
 
@@ -413,7 +413,26 @@ function parseNumberedRankings(html, type, maxRank) {
     rankings.push({ rank, name, normalizedName: normalizeName(name), type });
   }
 
-  console.log(`[PL] numbered parser: ${rankings.length} ${type.toUpperCase()} entries`);
+  // Fallback to table format (used by the Hitter List)
+  if (rankings.length === 0) {
+    const tableRe = /<td[^>]*class="[^"]*rank[^"]*"[^>]*>\s*(\d{1,3})\s*<\/td>[\s\S]*?<td[^>]*class="[^"]*name[^"]*"[^>]*>.*?<a\b[^>]*href="https:\/\/pitcherlist\.com\/player\/[^"]*"[^>]*>([^<]+)<\/a>[\s\S]*?<\/td>/gi;
+    let tm;
+    while ((tm = tableRe.exec(html)) !== null) {
+      const rank = parseInt(tm[1], 10);
+      const name = decodeHtmlEntities(tm[2]).trim();
+
+      if (rank < 1 || rank > maxRank)            continue;
+      if (seenRanks.has(rank))                   continue;
+      if (!name || name.split(/\s+/).length < 2) continue;
+      if (seenNames.has(name.toLowerCase()))     continue;
+
+      seenRanks.add(rank);
+      seenNames.add(name.toLowerCase());
+      rankings.push({ rank, name, normalizedName: normalizeName(name), type });
+    }
+  }
+
+  console.log(`[PL] numbered/table parser: ${rankings.length} ${type.toUpperCase()} entries`);
   return rankings.sort((a, b) => a.rank - b.rank);
 }
 
